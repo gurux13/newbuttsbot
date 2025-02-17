@@ -1,0 +1,12 @@
+[Unit]
+Description=NewButtsBot
+After=network.target
+
+[Service]
+Type=simple
+User=butt
+
+ExecStart=/home/butt/bot/start.sh
+
+[Install]
+WantedBy=default.target
