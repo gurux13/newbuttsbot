@@ -136,6 +136,6 @@ class SelfMessageHandler(MessageHandler):
                 print("Command found", command)
                 await self.command_mapping[command](message, bot)
             else:
-                reply_text = f'Command {command} not found. Available commands: {", ".join(self.command_mapping.keys())}'
+                reply_text = f'Command {command} not found. Available commands: {", ".join(['!' + c for c in self.command_mapping.keys()])}'
                 await self.reply_in_chat(message, reply_text, bot)
         
