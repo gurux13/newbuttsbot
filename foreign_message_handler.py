@@ -37,7 +37,7 @@ class ForeignMessageHandler(MessageHandler):
             return
         
         text = message.text
-        buttified = self.butts.replace_nth_syllable(text, subscription_info.rate, subscription_info.butt_word)
+        buttified = self.butts.replace_nth_syllable(text, subscription_info.rate, subscription_info.butt_word, self.get_message_emote_text(message))
         if buttified != text:
             await self.reply_in_chat(message, buttified, bot)
       

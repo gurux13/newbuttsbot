@@ -9,6 +9,7 @@ class StartupHandler:
 
     @db_session
     async def on_bot_ready(self, bot: ButtsBot, session: AsyncSession):
+        
         result = await session.execute(Select(ChatSubscription).where(ChatSubscription.is_subscribed == True))
         for subscription in result.scalars():
             await bot.subscribe_to_chat(subscription.broadcaster_id)

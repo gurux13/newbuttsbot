@@ -31,14 +31,15 @@ class SelfMessageHandler(MessageHandler):
             
     @db_session
     async def on_joinme(self, message, bot: ButtsBot, session: AsyncSession):
-        await bot.subscribe_to_chat(self.get_message_sender_id(message))
+        subscribed = await bot.subscribe_to_chat(self.get_message_sender_id(message))
         existing_sub = await session.get(ChatSubscription, self.get_message_sender_id(message))
         if existing_sub is None:
             new_sub = get_default_subscription(self.get_message_sender_id(message))
             session.add(new_sub)
         else:
             existing_sub.is_subscribed = True
-        await self.reply_in_chat(message, f"@{self.get_message_sender_name(message)}, I have joined you. Let there be butt.", bot)
+        message_text = f"@{self.get_message_sender_name(message)}," + ("I am now subscribed to your chat. Let there be butt." if subscribed else "I am already subscribed to your chat. Let there be butt.")
+        await self.reply_in_chat(message, message_text, bot)
     
     @db_session
     async def on_setword(self, message, bot: ButtsBot, session: AsyncSession):

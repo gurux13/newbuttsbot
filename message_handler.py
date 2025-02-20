@@ -1,5 +1,6 @@
 from twitchio.ext import commands
 from twitchbot import ButtsBot
+from typing import List
 class MessageHandler:
     def __init__(self):
         pass
@@ -7,6 +8,8 @@ class MessageHandler:
         await bot.get_context(reply_to).channel.send_message(sender=bot.identity_data.bot_id, token_for=bot.identity_data.bot_id, message=text)
     def get_message_text(self, message):
         return message.text
+    def get_message_emote_text(self, message) -> List[str]:
+        return [f.text for f in message.fragments if f.type == 'emote']
     def get_message_sender_id(self, message):
         return message.chatter.id
     def get_message_broadcaster_id(self, message):

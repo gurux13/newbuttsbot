@@ -60,16 +60,22 @@ class ButtsBot(commands.Bot):
             user_id=self.identity_data.bot_id,
         )
         sub = await self.subscribe_websocket(payload=subscription, as_bot=True,token_for=self.identity_data.bot_id)
-        # print("Subscribed to chat messages!")
 
     async def subscribe_to_chat(self, broadcaster_id: str):
+        if broadcaster_id in self.subscriptions:
+            print("Already subscribed to chat messages for broadcaster", broadcaster_id)
+            return False
         subscription = eventsub.ChatMessageSubscription(
             broadcaster_user_id=broadcaster_id,
             user_id=self.identity_data.bot_id,
         )
         sub = await self.subscribe_websocket(payload=subscription, as_bot=True,token_for=self.identity_data.bot_id)
+        if sub is None:
+            print("Already subscribed to chat messages for broadcaster", broadcaster_id)
+            return False
         self.subscriptions[broadcaster_id] = sub['data'][0]['id']
         print("Subscribed to chat messages for broadcaster", broadcaster_id, 'with id', sub['data'][0]['id'])
+        return True
     async def unsubscribe_from_chat(self, broadcaster_id: str) -> bool:
         if broadcaster_id not in self.subscriptions:
             print("Not subscribed to chat messages for broadcaster", broadcaster_id)

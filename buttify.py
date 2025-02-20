@@ -79,9 +79,9 @@ class Buttifier:
             alpha_count += 1
         return result
 
-    def replace_nth_syllable(self, text, n, replacement="butt"):
+    def replace_nth_syllable(self, text, n, replacement, forbidden_words):
         """Replaces syllables, preserving case/plurality, including alternating."""
-
+        forbidden_words = set(forbidden_words)
         word_spans = list(NLTKWordTokenizer().span_tokenize(text))
         words = [text[start:end] for start, end in word_spans]
         
@@ -91,6 +91,9 @@ class Buttifier:
         for word in words:
             original_word = word  # Keep the original
             if not word.isalpha():
+                result_words.append(word)
+                continue
+            if word in forbidden_words:
                 result_words.append(word)
                 continue
             SSP = SyllableTokenizer()
