@@ -5,8 +5,12 @@ After=network.target
 [Service]
 Type=simple
 User=butt
+Restart=always
 
 ExecStart=/home/butt/bot/start.sh
+
+StandardOutput=journal
+StandardError=journal
 
 [Install]
 WantedBy=default.target
