@@ -139,5 +139,5 @@ class SelfMessageHandler(MessageHandler):
                 reply_text = f'Command {command} not found. Available commands: {", ".join(['!' + c for c in self.command_mapping.keys()])}'
                 await self.reply_in_chat(message, reply_text, bot)
         else:
-            await self.reply_in_chat(message, "I am buttsbot. I am a bot. I do butt. !joinme for more butt.", bot)
+            await self.reply_in_chat(message, "I am newbuttsbot. I am a bot. I do butt. !joinme for more butt.", bot)
         
