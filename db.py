@@ -11,7 +11,7 @@ config.read('./alembic.ini')
 database_url = config.get('alembic', 'sqlalchemy.url').replace('postgresql://', 'postgresql+asyncpg://')
 
 # Create an async engine and a sessionmaker
-engine = create_async_engine(database_url, echo=True)
+engine = create_async_engine(database_url)
 AsyncSessionLocal = sessionmaker(
     bind=engine,
     class_=AsyncSession,

@@ -1,17 +1,9 @@
-
-import logging
-
-# Get the SQLAlchemy engine logger
-logger = logging.getLogger('sqlalchemy.engine')
-
-# Set the desired log level
-logger.setLevel(logging.WARNING)  # Or WARNING, ERROR, etc.
-
 import asyncio
-from twitchbot import Twitch, TwitchIdentityData, TwitchCallbacks, get_twitch_identity_data_from_env
+from twitchbot import Twitch, TwitchCallbacks, get_twitch_identity_data_from_env
 from self_message_handler import SelfMessageHandler
 from foreign_message_handler import ForeignMessageHandler
 from startup import StartupHandler
+
     
 class TrueTwitchCallbacks(TwitchCallbacks):
     def __init__(self):
@@ -25,6 +17,7 @@ class TrueTwitchCallbacks(TwitchCallbacks):
     async def on_ready(self, bot):
         await self.startup_handler.on_bot_ready(bot)
         
+      
 async def main():
     identity = get_twitch_identity_data_from_env()
     twitch = Twitch(identity, TrueTwitchCallbacks())
